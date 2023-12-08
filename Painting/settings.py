@@ -1,21 +1,13 @@
-import os
 from pathlib import Path
-from dotenv import load_dotenv
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / '.env')
-
 
 SECRET_KEY = 'django-insecure-va#!8%fp$!ga4jy9l7o2o_(w))8%*flx@fm_=!q0b9w!3qop#b'
 
-DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').split(' ')
-SECURE_SSL_REDIRECT = \
-    os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
-if SECURE_SSL_REDIRECT:
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+DEBUG = True
+
+ALLOWED_HOSTS = ['*']
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -67,12 +59,8 @@ WSGI_APPLICATION = 'Painting.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DBNAME'),
-        'HOST': os.environ.get('DBHOST'),
-        'USER': os.environ.get('DBUSER'),
-        'PASSWORD': os.environ.get('DBPASS'),
-        'OPTIONS': {'sslmode': 'require'},
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
